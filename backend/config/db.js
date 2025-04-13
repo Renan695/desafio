@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
+/* Configuração e conexão com o banco de dados MySQL */
 const db = await mysql.createPool({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -15,6 +16,5 @@ const db = await mysql.createPool({
   queueLimit: 0
 });
 
-
-console.log('✅ Conectado ao MySQL do WAMP');
+console.log('Conectado ao MySQL do WAMP');
 export default db;

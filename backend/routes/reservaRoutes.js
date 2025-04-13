@@ -1,8 +1,9 @@
 import express from 'express';
-import { criarReserva } from '../controllers/reservaController.js'; // puxa o controller
+import { criarReserva } from '../controllers/reservaController.js';
 
 const router = express.Router();
 
-router.post('/reservas', criarReserva); // cria a rota POST
+/* Definição das rotas para reservas */
+router.post('/reservas', criarReserva);
 
 export default router;

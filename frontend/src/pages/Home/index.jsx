@@ -4,48 +4,55 @@ import Lixeira from '../../assets/lixeira.svg';
 import api from '../../services/api';
 
 function Home() {
-  const [users, setUsers] = useState([]);
-  const [message, setMessage] = useState('');
-  const [editando, setEditando] = useState(false);
-  const [idEditando, setIdEditando] = useState(null);
+  const [users, setUsers] = useState([]); // Estado para armazenar os usuários
+  const [message, setMessage] = useState(''); // Estado para mensagens de feedback
+  const [editando, setEditando] = useState(false); // Estado para controlar se está editando
+  const [idEditando, setIdEditando] = useState(null); // Estado para armazenar o id do usuário que está sendo editado
 
+  // Referências para os inputs
   const inputNome = useRef();
   const inputEmail = useRef();
   const inputTelefone = useRef();
   const inputCPF = useRef();
 
+  // Chama a função de buscar os usuários ao carregar o componente
   useEffect(() => {
     getUsers();
   }, []);
 
+  /* Função para buscar os usuários da API */
   async function getUsers() {
     try {
       const response = await api.get('/cliente');
-      setUsers(response.data);
+      setUsers(response.data); // Atualiza a lista de usuários
     } catch (error) {
       setMessage('Erro ao buscar usuários!');
-      setTimeout(() => setMessage(''), 2000);
+      setTimeout(() => setMessage(''), 2000); // Limpa a mensagem após 2 segundos
     }
   }
 
+  /* Função para criar um novo usuário */
   async function createUsers() {
     const nome = inputNome.current.value.trim();
     const email = inputEmail.current.value.trim();
     const telefone = limparMascara(inputTelefone.current.value);
     const cpf = limparMascara(inputCPF.current.value);
 
+    // Verifica se todos os campos estão preenchidos
     if (!nome || !email || !telefone || !cpf) {
       setMessage('Preencha todos os campos!');
       setTimeout(() => setMessage(''), 2000);
       return;
     }
 
+    // Valida o formato do e-mail
     if (!isEmailValido(email)) {
       setMessage('E-mail inválido!');
       setTimeout(() => setMessage(''), 2000);
       return;
     }
 
+    // Valida o formato do telefone e CPF
     if (telefone.length !== 11 || cpf.length !== 11) {
       setMessage('Telefone ou CPF inválidos!');
       setTimeout(() => setMessage(''), 2000);
@@ -54,17 +61,17 @@ function Home() {
 
     try {
       await api.post('/cliente', { nome, email, telefone, cpf });
-      
-      limparCampos();
+      limparCampos(); // Limpa os campos após o cadastro
       setMessage('Usuário cadastrado com sucesso!');
       setTimeout(() => setMessage(''), 2000);
-      getUsers();
+      getUsers(); // Atualiza a lista de usuários
     } catch (error) {
       setMessage('Erro ao cadastrar usuário!');
       setTimeout(() => setMessage(''), 2000);
     }
   }
 
+  /* Função para atualizar um usuário existente */
   async function updateUsers() {
     const nome = inputNome.current.value.trim();
     const email = inputEmail.current.value.trim();
@@ -73,17 +80,18 @@ function Home() {
 
     try {
       await api.put(`/cliente/${idEditando}`, { nome, email, telefone, cpf });
-      limparCampos();
+      limparCampos(); // Limpa os campos após a atualização
       setMessage('Usuário atualizado com sucesso!');
       setTimeout(() => setMessage(''), 2000);
-      getUsers();
-      setEditando(false); // Isso vai esconder o botão de atualização
+      getUsers(); // Atualiza a lista de usuários
+      setEditando(false); // Desativa o modo de edição
     } catch (error) {
       setMessage('Erro ao atualizar usuário!');
       setTimeout(() => setMessage(''), 2000);
     }
   }
 
+  /* Função para preencher o formulário com os dados do usuário que será editado */
   function preencherFormulario(user) {
     inputNome.current.value = user.nome;
     inputEmail.current.value = user.email;
@@ -94,6 +102,7 @@ function Home() {
     setIdEditando(user.id);
   }
 
+  /* Função para resetar o formulário e desmarcar o modo de edição */
   function resetForm() {
     inputNome.current.value = '';
     inputEmail.current.value = '';
@@ -104,6 +113,7 @@ function Home() {
     setIdEditando(null);
   }
 
+  /* Função para deletar um usuário */
   async function deleteUsers(id) {
     if (!window.confirm('Tem certeza que deseja deletar este usuário?')) {
       return;
@@ -113,13 +123,14 @@ function Home() {
       await api.delete(`/cliente/${id}`);
       setMessage('Usuário deletado com sucesso!');
       setTimeout(() => setMessage(''), 2000);
-      getUsers();
+      getUsers(); // Atualiza a lista de usuários
     } catch (error) {
       setMessage('Erro ao deletar usuário!');
       setTimeout(() => setMessage(''), 2000);
     }
   }
 
+  /* Função para formatar o telefone enquanto o usuário digita */
   function handleTelefoneChange(e) {
     let value = e.target.value.replace(/\D/g, '');
     if (e.nativeEvent.inputType === "deleteContentBackward") {
@@ -138,6 +149,7 @@ function Home() {
     e.target.value = value;
   }
 
+  /* Função para formatar o CPF enquanto o usuário digita */
   function handleCPFChange(e) {
     let value = e.target.value.replace(/\D/g, '');
     if (value.length > 11) value = value.slice(0, 11);
@@ -151,10 +163,12 @@ function Home() {
     e.target.value = value;
   }
 
+  /* Função para remover as máscaras de CPF e telefone */
   function limparMascara(valor) {
     return valor.replace(/\D/g, '');
   }
 
+  /* Função para limpar os campos de input */
   function limparCampos() {
     inputNome.current.value = '';
     inputEmail.current.value = '';
@@ -162,6 +176,7 @@ function Home() {
     inputCPF.current.value = '';
   }
 
+  /* Função para validar o formato de e-mail */
   function isEmailValido(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
@@ -198,6 +213,7 @@ function Home() {
 
       {message && <p className="message">{message}</p>}
 
+      {/* Exibe a lista de usuários cadastrados */}
       <section className="listagem">
         {users.map((user) => (
           <article key={user.id} className="card">
