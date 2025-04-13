@@ -2,7 +2,7 @@
 
 Este projeto é o frontend desenvolvido em **React (Vite)** para interação com o sistema de reservas.
 
-## 🚀 Como Rodar
+## Como Rodar
 
 ```bash
 cd frontend
@@ -12,9 +12,11 @@ npm run dev
 
 > O frontend estará disponível em **http://localhost:5173**.
 
-## 📋 Funcionalidades
+## Funcionalidades
 
 - Cadastro e consulta de clientes
 - Cadastro e consulta de tipos de locação
 - Cadastro e visualização de reservas
 - Busca de locações disponíveis por data
+
+Para o funcionamento completo, é necessário que o backend esteja rodando em http://localhost:3000.
