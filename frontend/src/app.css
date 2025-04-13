@@ -1,0 +1,21 @@
+.menu {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+  }
+  
+  .menu a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    padding: 8px 16px;
+    border-radius: 20px;
+    transition: background 0.3s;
+  }
+  
+  .menu a:hover {
+    background-color: #6A9997;
+  }
+  

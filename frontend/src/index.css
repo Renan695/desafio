@@ -1,0 +1,13 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+  }
+  
+  body {
+    background: linear-gradient( #004243, #206C6E, #6A9997); /* Degradê no fundo */
+    height: auto; /* Deixa a altura ajustável */
+    min-height: 100vh; /* Garante que o body ocupe pelo menos a altura da tela */
+    
+  }

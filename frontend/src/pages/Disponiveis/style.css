@@ -1,0 +1,120 @@
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 100px;
+}
+
+h1 {
+  color: white;
+  font-size: 28px;
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 30px;
+  border-radius: 10px;
+  background-color: #6A9997; /* Verde mais suave para o formulário */
+  max-width: 50%;
+  width: 400px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Box shadow suave para o formulário */
+}
+
+form button {
+  border-radius: 30px;
+  background-color: #206C6E; /* Verde médio para o botão */
+  height: 40px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  font-size: 18px;
+  transition: transform 0.3s ease, opacity 0.3s ease; /* Transição suave para o botão */
+}
+
+form button:hover {
+  opacity: 0.9;
+  transform: scale(1.1); /* Aumenta o botão quando passar o mouse */
+}
+
+form input {
+  border: 1px solid #48456c;
+  border-radius: 30px;
+  height: 40px;
+  background-color: #004243; /* Fundo mais escuro para os inputs */
+  color: white;
+  font-size: 14px;
+  padding-left: 10px;
+  outline: none;
+}
+
+/* Cards */
+.listagem {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.card {
+  background-color: #206C6E; /* Verde médio */
+  margin: 10px;
+  padding: 20px;
+  width: 250px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Box shadow suave para o card */
+}
+
+.card div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.card div p {
+  color: white;
+  font-weight: bold;
+}
+
+.card div p span {
+  font-weight: normal;
+}
+
+.card button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease; /* Animação no botão da lixeira */
+}
+
+.card button:hover {
+  opacity: 0.8;
+  transform: scale(1.2); /* Aumenta o ícone da lixeira quando o mouse passa por cima */
+}
+
+.card:hover {
+  transform: scale(1.03);
+  background-color: #6A9997; /* Quando hover no card */
+}
+
+/* Mensagem de sucesso */
+.message {
+  color: white;
+  background-color: #6A9997; /* Verde acinzentado */
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Box shadow suave para a mensagem */
+}

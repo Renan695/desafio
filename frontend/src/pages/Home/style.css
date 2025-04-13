@@ -1,0 +1,139 @@
+/* Estilo do container (Fundo do site) */
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  color: #FFFFFF; /* Branco Neve para o texto */
+}
+
+/* Estilo do header */
+header {
+  background: #004243; /* Cor escura do degradê */
+  padding: 20px;
+  color: #FFFFFF;
+  text-align: center;
+  width: 100%;
+}
+
+header h1 {
+  font-size: 30px;
+  margin: 0;
+}
+
+/* Estilo do título */
+h1 {
+  color: #FFFFFF; /* Branco Neve para o título */
+  font-size: 28px;
+  text-align: center;
+}
+
+/* Estilo do form */
+.form {
+  background-color: #206C6E; /* Verde médio do degradê */
+  padding: 30px;
+  border-radius: 10px;
+  width: 400px;
+  max-width: 90%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Estilo do botão */
+form button {
+  background-color: #6BFFB1; /* Verde limão */
+  border: none;
+  border-radius: 5px;
+  height: 40px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+form button:hover {
+  opacity: 0.8;
+}
+
+/* Estilo dos inputs */
+form input {
+  background-color: #6A9997; /* Verde clarinho do degradê */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  height: 35px;
+  padding: 5px 10px;
+  color: #ffffff;
+}
+
+/* Nova seção para listagem dos cards */
+.listagem {
+  display: flex;
+  flex-wrap: wrap; /* Permite quebrar linha */
+  justify-content: center; /* Centraliza os cards */
+  gap: 20px; /* Espaço entre os cards */
+  margin-top: 20px;
+}
+
+/* Estilo dos cards */
+.card {
+  background-color: #004243; /* Verde escuro do degradê */
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 10px;
+  width: 250px; /* Largura inicial do card */
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column; /* Empilha os elementos verticalmente */
+  justify-content: flex-start; /* Faz com que o conteúdo comece no topo */
+  overflow: visible; /* Deixa o conteúdo visível */
+  height: auto; /* Permite que o card se ajuste ao conteúdo */
+  word-wrap: break-word; /* Garante que palavras longas quebrem no final da linha */
+}
+
+/* Texto dentro dos cards */
+.card p {
+  margin: 5px 0;
+}
+
+.card div p span {
+  font-weight: normal;
+}
+
+/* Ajuste dos botões dentro do card */
+.card .botoes {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.card button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s ease; /* Animação no clique */
+  margin: 0 5px; /* Garantir que os botões não fiquem muito próximos */
+}
+
+.card button:hover {
+  opacity: 0.8;
+}
+
+.card button:active {
+  transform: scale(0.9); /* Efeito de "clicada" na lixeira */
+}
+
+/* Efeito Hover no Card */
+.card:hover {
+  transform: scale(1.03);
+  background-color: #206C6E; /* Cor média do degradê no hover */
+}
+
+/* Mensagem de erro ou sucesso */
+.message {
+  color: #FFFFFF; /* Branco Neve */
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  text-align: center;
+}

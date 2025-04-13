@@ -1,0 +1,129 @@
+.container {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 100px;
+}
+
+h1 {
+  color: white;
+  font-size: 28px;
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 30px;
+  border-radius: 10px;
+  background-color: #2e2d4e;
+  max-width: 50%;
+  width: 400px;
+  margin-bottom: 20px;
+}
+
+form button {
+  border-radius: 30px;
+  background-color: #8b8ae1;
+  height: 40px;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  color: white;
+  font-size: 18px;
+}
+
+form button:hover {
+  opacity: 0.8;
+}
+
+form input {
+  border: 1px solid #48456c;
+  border-radius: 30px;
+  height: 40px;
+  background-color: #363653;
+  color: white;
+  font-size: 14px;
+  padding-left: 10px;
+  outline: none;
+}
+
+/* 🆕 Cards organizados lado a lado */
+.listagem {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.card {
+  background-color: #2e2d4e;
+  margin: 10px;
+  padding: 20px;
+  width: 250px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row; /* Dados e lixeira lado a lado */
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+.card div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.card div p {
+  color: white;
+  font-weight: bold;
+}
+
+.card div p span {
+  font-weight: normal;
+}
+
+.card button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.card button:hover {
+  opacity: 0.8;
+}
+
+/* 🆕 Efeito hover no card */
+.card:hover {
+  transform: scale(1.03);
+  background-color: #3a3972;
+}
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.message {
+  color: white;
+  background-color: #4caf50;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.selecao {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  padding: 10px;
+  border-radius: 30px;
+  max-width: 100%;
+  width: 400px;
+}
