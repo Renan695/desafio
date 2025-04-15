@@ -2,7 +2,7 @@
 
 A aplicação utiliza **MySQL** como banco de dados.
 
-## Como Configurar o Banco de Dados
+## 📄 Como Configurar o Banco de Dados
 
 1. Crie um banco de dados vazio no MySQL:
 
@@ -15,14 +15,14 @@ CREATE DATABASE reservas;
 Se estiver usando linha de comando:
 
 ```bash
-mysql -u root -p reservas < Dump20250410.sql
+mysql -u seu_usuario -p nome_do_banco < Dump20250410.sql
 ```
 
 Ou use ferramentas como **phpMyAdmin** ou **MySQL Workbench** para importar o arquivo `.sql`.
 
 > **Importante:** Atualize o nome do banco e as credenciais no arquivo `.env` do backend.
 
-## Conexão no Backend
+## 🛠️ Conexão no Backend
 
 As configurações de conexão MySQL são definidas no arquivo `.env`:
 
@@ -36,5 +36,3 @@ PORT=3000
 ```
 
 Certifique-se que o serviço MySQL esteja ativo e funcionando corretamente.
-
-Caso o MySQL esteja rodando em uma porta diferente da padrão (3306), ajuste a variável `DB_PORT` no `.env`.

@@ -6,8 +6,8 @@
   }
   
   body {
-    background: linear-gradient( #004243, #206C6E, #6A9997);
-    height: auto;
-    min-height: 100vh;
+    background: linear-gradient( #004243, #206C6E, #6A9997); /* Degradê no fundo */
+    height: auto; /* Deixa a altura ajustável */
+    min-height: 100vh; /* Garante que o body ocupe pelo menos a altura da tela */
     
   }

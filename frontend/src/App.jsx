@@ -3,7 +3,7 @@ import Home from './pages/Home';
 import Locacao from './pages/Locacao';
 import Reserva from './pages/Reserva';
 import Disponiveis from './pages/Disponiveis';
-import './app.css';
+import './app.css'; // Estilo do menu
 
 function App() {
   return (

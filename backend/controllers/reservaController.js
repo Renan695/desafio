@@ -1,6 +1,5 @@
-import db from '../db.js';
+import db from '../db.js'; // conecta no banco
 
-/* Função para criar uma nova reserva */
 export async function criarReserva(req, res) {
   try {
     const { cliente_id, locacao_id, data_inicio, data_fim, valor_final, situacao } = req.body;

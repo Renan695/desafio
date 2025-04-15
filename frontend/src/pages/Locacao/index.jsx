@@ -3,224 +3,190 @@ import './style.css';
 import Lixeira from '../../assets/lixeira.svg';
 import api from '../../services/api';
 
-function Home() {
-  const [users, setUsers] = useState([]);
+function Locacao() {
+  const [locacoes, setLocacoes] = useState([]);
   const [message, setMessage] = useState('');
   const [editando, setEditando] = useState(false);
   const [idEditando, setIdEditando] = useState(null);
 
   const inputNome = useRef();
-  const inputEmail = useRef();
-  const inputTelefone = useRef();
-  const inputCPF = useRef();
+  const inputTipo = useRef();
+  const inputDescricao = useRef();
+  const inputValorHora = useRef();
+  const inputTempoMinimo = useRef();
+  const inputTempoMaximo = useRef();
 
-  // Função para buscar os usuários da API
   useEffect(() => {
-    getUsers();
+    getLocacoes();
   }, []);
 
-  // Função para buscar os usuários da API
-  async function getUsers() {
+  async function getLocacoes() {
     try {
-      const response = await api.get('/cliente');
-      setUsers(response.data);
+      const locacoesFromApi = await api.get('/locacao');
+      setLocacoes(locacoesFromApi.data);
     } catch (error) {
-      setMessage('Erro ao buscar usuários!');
+      setMessage('Erro ao buscar locações!');
       setTimeout(() => setMessage(''), 2000);
     }
   }
 
-  // Função para criar um novo usuário
-  async function createUsers() {
+  async function createLocacao() {
     const nome = inputNome.current.value.trim();
-    const email = inputEmail.current.value.trim();
-    const telefone = limparMascara(inputTelefone.current.value);
-    const cpf = limparMascara(inputCPF.current.value);
+    const tipo = inputTipo.current.value.trim();
+    const descricao = inputDescricao.current.value.trim();
+    const valorHora = parseFloat(inputValorHora.current.value);
+    const tempoMinimo = parseInt(inputTempoMinimo.current.value);
+    const tempoMaximo = parseInt(inputTempoMaximo.current.value);
 
-    if (!nome || !email || !telefone || !cpf) {
-      setMessage('Preencha todos os campos!');
+    if (!nome || !tipo || isNaN(valorHora) || isNaN(tempoMinimo) || isNaN(tempoMaximo)) {
+      setMessage('Preencha todos os campos obrigatórios!');
       setTimeout(() => setMessage(''), 2000);
       return;
     }
 
-    if (!isEmailValido(email)) {
-      setMessage('E-mail inválido!');
+    if (valorHora <= 0) {
+      setMessage('Valor por hora deve ser maior que 0!');
       setTimeout(() => setMessage(''), 2000);
       return;
     }
 
-    if (telefone.length !== 11 || cpf.length !== 11) {
-      setMessage('Telefone ou CPF inválidos!');
+    if (tempoMinimo <= 0 || tempoMaximo <= 0) {
+      setMessage('Tempo mínimo e máximo devem ser maiores que 0!');
+      setTimeout(() => setMessage(''), 2000);
+      return;
+    }
+
+    if (tempoMinimo > tempoMaximo) {
+      setMessage('Tempo mínimo não pode ser maior que o tempo máximo!');
       setTimeout(() => setMessage(''), 2000);
       return;
     }
 
     try {
-      await api.post('/cliente', { nome, email, telefone, cpf });
-      limparCampos();
-      setMessage('Usuário cadastrado com sucesso!');
+      await api.post('/locacao', {
+        nome,
+        tipo,
+        descricao,
+        valor_hora: valorHora,
+        tempo_minimo: tempoMinimo,
+        tempo_maximo: tempoMaximo
+      });
+
+      resetForm();
+      setMessage('Locação cadastrada com sucesso!');
       setTimeout(() => setMessage(''), 2000);
-      getUsers();
+      getLocacoes();
     } catch (error) {
-      setMessage('Erro ao cadastrar usuário!');
+      setMessage('Erro ao cadastrar locação!');
       setTimeout(() => setMessage(''), 2000);
     }
   }
 
-  // Função para atualizar um usuário existente
-  async function updateUsers() {
+  async function updateLocacao() {
     const nome = inputNome.current.value.trim();
-    const email = inputEmail.current.value.trim();
-    const telefone = limparMascara(inputTelefone.current.value);
-    const cpf = limparMascara(inputCPF.current.value);
+    const tipo = inputTipo.current.value.trim();
+    const descricao = inputDescricao.current.value.trim();
+    const valorHora = parseFloat(inputValorHora.current.value);
+    const tempoMinimo = parseInt(inputTempoMinimo.current.value);
+    const tempoMaximo = parseInt(inputTempoMaximo.current.value);
 
     try {
-      await api.put(`/cliente/${idEditando}`, { nome, email, telefone, cpf });
-      limparCampos();
-      setMessage('Usuário atualizado com sucesso!');
+      await api.put(`/locacao/${idEditando}`, {
+        nome,
+        tipo,
+        descricao,
+        valor_hora: valorHora,
+        tempo_minimo: tempoMinimo,
+        tempo_maximo: tempoMaximo
+      });
+
+      resetForm();
+      setMessage('Locação atualizada com sucesso!');
       setTimeout(() => setMessage(''), 2000);
-      getUsers();
-      setEditando(false);
+      getLocacoes();
     } catch (error) {
-      setMessage('Erro ao atualizar usuário!');
+      setMessage('Erro ao atualizar locação!');
       setTimeout(() => setMessage(''), 2000);
     }
   }
 
-  // Função para preencher o formulário com os dados do usuário que será editado
-  function preencherFormulario(user) {
-    inputNome.current.value = user.nome;
-    inputEmail.current.value = user.email;
-    inputTelefone.current.value = user.telefone;
-    inputCPF.current.value = user.cpf;
+  function preencherFormulario(locacao) {
+    inputNome.current.value = locacao.nome;
+    inputTipo.current.value = locacao.tipo;
+    inputDescricao.current.value = locacao.descricao;
+    inputValorHora.current.value = locacao.valor_hora;
+    inputTempoMinimo.current.value = locacao.tempo_minimo;
+    inputTempoMaximo.current.value = locacao.tempo_maximo;
 
     setEditando(true);
-    setIdEditando(user.id);
+    setIdEditando(locacao.id);
   }
 
-  // Função para resetar o formulário e desmarcar o modo de edição
   function resetForm() {
     inputNome.current.value = '';
-    inputEmail.current.value = '';
-    inputTelefone.current.value = '';
-    inputCPF.current.value = '';
+    inputTipo.current.value = '';
+    inputDescricao.current.value = '';
+    inputValorHora.current.value = '';
+    inputTempoMinimo.current.value = '';
+    inputTempoMaximo.current.value = '';
 
     setEditando(false);
     setIdEditando(null);
   }
 
-  // Função para deletar um usuário
-  async function deleteUsers(id) {
-    if (!window.confirm('Tem certeza que deseja deletar este usuário?')) {
+  async function deleteLocacao(id) {
+    if (!window.confirm('Tem certeza que deseja deletar esta locação?')) {
       return;
     }
 
     try {
-      await api.delete(`/cliente/${id}`);
-      setMessage('Usuário deletado com sucesso!');
+      await api.delete(`/locacao/${id}`);
+      setMessage('Locação deletada com sucesso!');
       setTimeout(() => setMessage(''), 2000);
-      getUsers();
+      getLocacoes();
     } catch (error) {
-      setMessage('Erro ao deletar usuário!');
+      setMessage('Erro ao deletar locação!');
       setTimeout(() => setMessage(''), 2000);
     }
-  }
-
-  // Função para formatar o telefone enquanto o usuário digita
-  function handleTelefoneChange(e) {
-    let value = e.target.value.replace(/\D/g, '');
-    if (e.nativeEvent.inputType === "deleteContentBackward") {
-      e.target.value = value;
-      return;
-    }
-    if (value.length > 11) value = value.slice(0, 11);
-    
-    if (value.length > 6) {
-      value = value.replace(/^(\d{2})(\d{5})(\d{0,4}).*/, '($1) $2-$3');
-    } else if (value.length > 2) {
-      value = value.replace(/^(\d{2})(\d{0,5})/, '($1) $2');
-    } else if (value.length > 0) {
-      value = value.replace(/^(\d*)/, '($1');
-    }
-    e.target.value = value;
-  }
-
-  // Função para formatar o CPF enquanto o usuário digita
-  function handleCPFChange(e) {
-    let value = e.target.value.replace(/\D/g, '');
-    if (value.length > 11) value = value.slice(0, 11);
-    if (value.length > 9) {
-      value = value.replace(/^(\d{3})(\d{3})(\d{3})(\d{0,2}).*/, '$1.$2.$3-$4');
-    } else if (value.length > 6) {
-      value = value.replace(/^(\d{3})(\d{3})(\d{0,3}).*/, '$1.$2.$3');
-    } else if (value.length > 3) {
-      value = value.replace(/^(\d{3})(\d{0,3})/, '$1.$2');
-    }
-    e.target.value = value;
-  }
-
-  // Função para remover as máscaras de CPF e telefone
-  function limparMascara(valor) {
-    return valor.replace(/\D/g, '');
-  }
-
-  // Função para limpar os campos de input
-  function limparCampos() {
-    inputNome.current.value = '';
-    inputEmail.current.value = '';
-    inputTelefone.current.value = '';
-    inputCPF.current.value = '';
-  }
-
-  // Função para validar o formato de e-mail
-  function isEmailValido(email) {
-    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
 
   return (
     <section className="container">
       <form>
-        <h1>{editando ? 'Editar Usuário' : 'Cadastro de Usuários'}</h1>
+        <h1>{editando ? 'Editar Locação' : 'Cadastro de Locações'}</h1>
 
         <input placeholder="Nome" type="text" ref={inputNome} />
-        <input placeholder="E-mail" type="email" ref={inputEmail} />
-        <input
-          placeholder="Telefone"
-          type="text"
-          ref={inputTelefone}
-          onChange={handleTelefoneChange}
-        />
-        <input
-          placeholder="CPF"
-          type="text"
-          ref={inputCPF}
-          onChange={handleCPFChange}
-        />
-        <button type="button" onClick={editando ? updateUsers : createUsers}>
-          {editando ? 'Atualizar Usuário' : 'Cadastrar Usuário'}
+        <input placeholder="Tipo" type="text" ref={inputTipo} />
+        <input placeholder="Descrição" type="text" ref={inputDescricao} />
+        <input placeholder="Valor por Hora" type="number" step="0.01" ref={inputValorHora} />
+        <input placeholder="Tempo Mínimo (Horas)" type="number" ref={inputTempoMinimo} />
+        <input placeholder="Tempo Máximo (Horas)" type="number" ref={inputTempoMaximo} />
+
+        <button type="button" onClick={editando ? updateLocacao : createLocacao}>
+          {editando ? 'Atualizar Locação' : 'Cadastrar Locação'}
         </button>
 
         {editando && (
-          <button type="button" onClick={resetForm}>
-            Cancelar Edição
-          </button>
+          <button type="button" onClick={resetForm}>Cancelar Edição</button>
         )}
       </form>
 
       {message && <p className="message">{message}</p>}
 
       <section className="listagem">
-        {users.map((user) => (
-          <article key={user.id} className="card">
+        {locacoes.map((locacao) => (
+          <article key={locacao.id} className="card">
             <div>
-              <p>Nome: <span>{user.nome}</span></p>
-              <p>Email: <span>{user.email}</span></p>
-              <p>Telefone: <span>{user.telefone}</span></p>
-              <p>CPF: <span>{user.cpf}</span></p>
+              <p>Nome: <span>{locacao.nome}</span></p>
+              <p>Tipo: <span>{locacao.tipo}</span></p>
+              <p>Descrição: <span>{locacao.descricao}</span></p>
+              <p>Valor Hora: <span>R$ {parseFloat(locacao.valor_hora).toFixed(2)}</span></p>
+              <p>Tempo Mínimo: <span>{locacao.tempo_minimo}h</span></p>
+              <p>Tempo Máximo: <span>{locacao.tempo_maximo}h</span></p>
             </div>
             <div className="botoes">
-              <button onClick={() => preencherFormulario(user)}>Editar</button>
-              <button onClick={() => deleteUsers(user.id)}>
+              <button onClick={() => preencherFormulario(locacao)}>Editar</button>
+              <button onClick={() => deleteLocacao(locacao.id)}>
                 <img src={Lixeira} alt="Ícone de lixeira" />
               </button>
             </div>
@@ -231,4 +197,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Locacao;

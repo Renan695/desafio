@@ -8,20 +8,17 @@ function Disponiveis() {
   const inputDataInicio = useRef();
   const inputDataFim = useRef();
 
-  /* Função para buscar locações disponíveis com base nas datas */
   async function buscarLocacoes() {
     const dataInicio = inputDataInicio.current.value;
     const dataFim = inputDataFim.current.value;
 
     try {
-      /* Requisição à API para buscar as locações disponíveis */
       const response = await api.get('/locacao/disponiveis', {
         params: {
           data_inicio: dataInicio,
           data_fim: dataFim
         }
       });
-      /* Atualiza o estado com as locações recebidas da API */
       setLocacoesDisponiveis(response.data);
     } catch (error) {
       console.error('Erro ao buscar locações disponíveis:', error);
@@ -33,30 +30,25 @@ function Disponiveis() {
       <form>
         <h1>Buscar Locações Disponíveis</h1>
 
-        {/* Campo para input de data de início */}
         <input
           type="datetime-local"
           placeholder="Data Início"
           ref={inputDataInicio}
         />
-        
-        {/* Campo para input de data de fim */}
         <input
           type="datetime-local"
           placeholder="Data Fim"
           ref={inputDataFim}
         />
 
-        {/* Botão para disparar a função de buscar locações */}
         <button type="button" onClick={buscarLocacoes}>Buscar</button>
       </form>
 
-      {/* Exibe a lista de locações disponíveis */}
+      {/* Listagem de cards */}
       <section className="listagem">
         {locacoesDisponiveis.map(locacao => (
           <article key={locacao.id} className="card">
             <div>
-              {/* Exibição das informações de cada locação */}
               <p>Nome: <span>{locacao.nome}</span></p>
               <p>Tipo: <span>{locacao.tipo}</span></p>
               <p>Descrição: <span>{locacao.descricao}</span></p>

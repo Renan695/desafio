@@ -29,8 +29,8 @@ PORT=3000
 
 - `POST /clientes` — Criar cliente
 - `GET /clientes` — Listar clientes
-- `POST /locacao` — Criar tipo de locação
-- `GET /locacao` — Listar tipos de locação
-- `POST /reserva` — Criar reserva
-- `GET /reserva` — Listar reservas
+- `POST /locacoes` — Criar tipo de locação
+- `GET /locacoes` — Listar tipos de locação
+- `POST /reservas` — Criar reserva
+- `GET /reservas` — Listar reservas
 - `GET /disponiveis/:data` — Listar locações disponíveis por data

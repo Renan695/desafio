@@ -18,14 +18,12 @@ function Reserva() {
   const inputValorFinal = useRef();
   const inputSituacao = useRef();
 
-  // Obtém as reservas, clientes e locações
   useEffect(() => {
     getReservas();
     getClientes();
     getLocacoes();
   }, []);
 
-  // Função para buscar as reservas da API
   async function getReservas() {
     try {
       const response = await api.get('/reserva');
@@ -36,7 +34,6 @@ function Reserva() {
     }
   }
 
-  // Função para buscar os clientes da API
   async function getClientes() {
     try {
       const response = await api.get('/cliente');
@@ -46,7 +43,6 @@ function Reserva() {
     }
   }
 
-  // Função para buscar as locações da API
   async function getLocacoes() {
     try {
       const response = await api.get('/locacao');
@@ -56,7 +52,6 @@ function Reserva() {
     }
   }
 
-  // Função para criar uma nova reserva
   async function createReserva() {
     try {
       await api.post('/reserva', {
@@ -78,7 +73,6 @@ function Reserva() {
     }
   }
 
-  // Função para atualizar uma reserva existente
   async function updateReserva() {
     try {
       await api.put(`/reserva/${idEditando}`, {
@@ -98,7 +92,6 @@ function Reserva() {
     }
   }
 
-  // Função para preencher o formulário com os dados de uma reserva
   function preencherFormulario(reserva) {
     inputClienteId.current.value = reserva.cliente_id;
     inputLocacaoId.current.value = reserva.locacao_id;
@@ -111,7 +104,6 @@ function Reserva() {
     setIdEditando(reserva.id);
   }
 
-  // Função para limpar o formulário
   function limparFormulario() {
     inputClienteId.current.value = '';
     inputLocacaoId.current.value = '';
@@ -124,7 +116,6 @@ function Reserva() {
     setIdEditando(null);
   }
 
-  // Função para deletar uma reserva
   async function deleteReserva(id) {
     if (!window.confirm('Tem certeza que deseja deletar esta reserva?')) {
       return;
