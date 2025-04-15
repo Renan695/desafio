@@ -1,4 +1,4 @@
-import db from '../db.js'; // conecta no banco
+import db from '../db.js';
 
 export async function criarReserva(req, res) {
   try {

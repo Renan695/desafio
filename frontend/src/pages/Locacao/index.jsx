@@ -20,6 +20,7 @@ function Locacao() {
     getLocacoes();
   }, []);
 
+  // Carrega as locações
   async function getLocacoes() {
     try {
       const locacoesFromApi = await api.get('/locacao');
@@ -30,6 +31,7 @@ function Locacao() {
     }
   }
 
+  // Cadastra uma nova locação
   async function createLocacao() {
     const nome = inputNome.current.value.trim();
     const tipo = inputTipo.current.value.trim();
@@ -38,26 +40,15 @@ function Locacao() {
     const tempoMinimo = parseInt(inputTempoMinimo.current.value);
     const tempoMaximo = parseInt(inputTempoMaximo.current.value);
 
+    // Valida os campos obrigatórios
     if (!nome || !tipo || isNaN(valorHora) || isNaN(tempoMinimo) || isNaN(tempoMaximo)) {
       setMessage('Preencha todos os campos obrigatórios!');
       setTimeout(() => setMessage(''), 2000);
       return;
     }
 
-    if (valorHora <= 0) {
-      setMessage('Valor por hora deve ser maior que 0!');
-      setTimeout(() => setMessage(''), 2000);
-      return;
-    }
-
-    if (tempoMinimo <= 0 || tempoMaximo <= 0) {
-      setMessage('Tempo mínimo e máximo devem ser maiores que 0!');
-      setTimeout(() => setMessage(''), 2000);
-      return;
-    }
-
-    if (tempoMinimo > tempoMaximo) {
-      setMessage('Tempo mínimo não pode ser maior que o tempo máximo!');
+    if (valorHora <= 0 || tempoMinimo <= 0 || tempoMaximo <= 0 || tempoMinimo > tempoMaximo) {
+      setMessage('Verifique os valores inseridos!');
       setTimeout(() => setMessage(''), 2000);
       return;
     }
@@ -82,6 +73,7 @@ function Locacao() {
     }
   }
 
+  // Atualiza uma locação existente
   async function updateLocacao() {
     const nome = inputNome.current.value.trim();
     const tipo = inputTipo.current.value.trim();
@@ -110,6 +102,7 @@ function Locacao() {
     }
   }
 
+  // Preenche o formulário para edição
   function preencherFormulario(locacao) {
     inputNome.current.value = locacao.nome;
     inputTipo.current.value = locacao.tipo;
@@ -122,6 +115,7 @@ function Locacao() {
     setIdEditando(locacao.id);
   }
 
+  // Limpa o formulário
   function resetForm() {
     inputNome.current.value = '';
     inputTipo.current.value = '';
@@ -134,6 +128,7 @@ function Locacao() {
     setIdEditando(null);
   }
 
+  // Deleta uma locação
   async function deleteLocacao(id) {
     if (!window.confirm('Tem certeza que deseja deletar esta locação?')) return;
 

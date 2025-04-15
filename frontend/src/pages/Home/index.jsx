@@ -18,6 +18,7 @@ function Home() {
     getUsers();
   }, []);
 
+  // Obtém os usuários cadastrados
   async function getUsers() {
     try {
       const response = await api.get('/cliente');
@@ -28,6 +29,7 @@ function Home() {
     }
   }
 
+  // Cria um novo usuário
   async function createUsers() {
     const nome = inputNome.current.value.trim();
     const email = inputEmail.current.value.trim();
@@ -64,6 +66,7 @@ function Home() {
     }
   }
 
+  // Atualiza um usuário existente
   async function updateUsers() {
     const nome = inputNome.current.value.trim();
     const email = inputEmail.current.value.trim();
@@ -83,6 +86,7 @@ function Home() {
     }
   }
 
+  // Preenche o formulário para edição
   function preencherFormulario(user) {
     inputNome.current.value = user.nome;
     inputEmail.current.value = user.email;
@@ -93,12 +97,14 @@ function Home() {
     setIdEditando(user.id);
   }
 
+  // Reseta o formulário
   function resetForm() {
     limparCampos();
     setEditando(false);
     setIdEditando(null);
   }
 
+  // Deleta um usuário
   async function deleteUsers(id) {
     if (!window.confirm('Tem certeza que deseja deletar este usuário?')) return;
 
@@ -113,6 +119,7 @@ function Home() {
     }
   }
 
+  // Formata o campo de telefone
   function handleTelefoneChange(e) {
     let value = e.target.value.replace(/\D/g, '');
     if (e.nativeEvent.inputType === "deleteContentBackward") {
@@ -130,6 +137,7 @@ function Home() {
     e.target.value = value;
   }
 
+  // Formata o campo de CPF
   function handleCPFChange(e) {
     let value = e.target.value.replace(/\D/g, '');
     if (value.length > 11) value = value.slice(0, 11);
@@ -143,10 +151,12 @@ function Home() {
     e.target.value = value;
   }
 
+  // Remove a máscara de um valor
   function limparMascara(valor) {
     return valor.replace(/\D/g, '');
   }
 
+  // Limpa os campos do formulário
   function limparCampos() {
     inputNome.current.value = '';
     inputEmail.current.value = '';
@@ -154,6 +164,7 @@ function Home() {
     inputCPF.current.value = '';
   }
 
+  // Valida o formato do e-mail
   function isEmailValido(email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   }
@@ -193,17 +204,17 @@ function Home() {
       <section className="home-listagem">
         {users.map((user) => (
           <article key={user.id} className="home-card">
-          <p><strong>Nome:</strong> {user.nome}</p>
-          <p><strong>Email:</strong> {user.email}</p>
-          <p><strong>Telefone:</strong> {user.telefone}</p>
-          <p><strong>CPF:</strong> {user.cpf}</p>
-          <div className="home-actions">
-            <button onClick={() => preencherFormulario(user)}>Editar</button>
-            <button onClick={() => deleteUsers(user.id)}>
-              <img src={Lixeira} alt="Ícone de lixeira" />
-            </button>
-          </div>
-        </article>        
+            <p><strong>Nome:</strong> {user.nome}</p>
+            <p><strong>Email:</strong> {user.email}</p>
+            <p><strong>Telefone:</strong> {user.telefone}</p>
+            <p><strong>CPF:</strong> {user.cpf}</p>
+            <div className="home-actions">
+              <button onClick={() => preencherFormulario(user)}>Editar</button>
+              <button onClick={() => deleteUsers(user.id)}>
+                <img src={Lixeira} alt="Ícone de lixeira" />
+              </button>
+            </div>
+          </article>        
         ))}
       </section>
     </section>

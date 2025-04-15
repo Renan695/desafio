@@ -24,6 +24,7 @@ function Reserva() {
     getLocacoes();
   }, []);
 
+  // Busca todas as reservas
   async function getReservas() {
     try {
       const response = await api.get('/reserva');
@@ -34,6 +35,7 @@ function Reserva() {
     }
   }
 
+  // Busca todos os clientes
   async function getClientes() {
     try {
       const response = await api.get('/cliente');
@@ -43,6 +45,7 @@ function Reserva() {
     }
   }
 
+  // Busca todas as locações
   async function getLocacoes() {
     try {
       const response = await api.get('/locacao');
@@ -52,6 +55,7 @@ function Reserva() {
     }
   }
 
+  // Cria uma nova reserva
   async function createReserva() {
     try {
       await api.post('/reserva', {
@@ -73,6 +77,7 @@ function Reserva() {
     }
   }
 
+  // Atualiza uma reserva existente
   async function updateReserva() {
     try {
       await api.put(`/reserva/${idEditando}`, {
@@ -92,6 +97,7 @@ function Reserva() {
     }
   }
 
+  // Preenche o formulário de edição com os dados da reserva
   function preencherFormulario(reserva) {
     inputClienteId.current.value = reserva.cliente_id;
     inputLocacaoId.current.value = reserva.locacao_id;
@@ -104,6 +110,7 @@ function Reserva() {
     setIdEditando(reserva.id);
   }
 
+  // Limpa o formulário de entrada
   function limparFormulario() {
     inputClienteId.current.value = '';
     inputLocacaoId.current.value = '';
@@ -116,6 +123,7 @@ function Reserva() {
     setIdEditando(null);
   }
 
+  // Deleta uma reserva
   async function deleteReserva(id) {
     if (!window.confirm('Tem certeza que deseja deletar esta reserva?')) return;
 

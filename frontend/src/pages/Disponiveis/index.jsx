@@ -8,6 +8,7 @@ function Disponiveis() {
   const inputDataInicio = useRef();
   const inputDataFim = useRef();
 
+  // Função para buscar as locações disponíveis com base nas datas fornecidas
   async function buscarLocacoes() {
     const dataInicio = inputDataInicio.current.value;
     const dataFim = inputDataFim.current.value;
@@ -30,6 +31,7 @@ function Disponiveis() {
       <form>
         <h1>Buscar Locações Disponíveis</h1>
 
+        {/* Campos para o usuário selecionar as datas de início e fim */}
         <input
           type="datetime-local"
           placeholder="Data Início"
@@ -41,10 +43,11 @@ function Disponiveis() {
           ref={inputDataFim}
         />
 
+        {/* Botão para disparar a busca das locações */}
         <button type="button" onClick={buscarLocacoes}>Buscar</button>
       </form>
 
-      {/* Listagem de cards */}
+      {/* Exibição das locações disponíveis em forma de cards */}
       <section className="listagem">
         {locacoesDisponiveis.map(locacao => (
           <article key={locacao.id} className="card">

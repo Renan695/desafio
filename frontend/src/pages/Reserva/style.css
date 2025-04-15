@@ -163,21 +163,3 @@
   -webkit-appearance: none;
   margin: 0;
 }
-
-/* Remove as setas no Firefox */
-.container.reserva input[type=number] {
-  -moz-appearance: textfield;
-}
-
-select {
-  border-radius: 30px;
-  padding: 10px;
-  background-color: #004243;
-  color: white;
-  border: 1px solid #004243;
-  outline: none;
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-}
-

@@ -163,8 +163,3 @@
   -webkit-appearance: none;
   margin: 0;
 }
-
-/* Remove as setas no Firefox */
-.container.locacao input[type=number] {
-  -moz-appearance: textfield;
-}

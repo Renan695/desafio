@@ -9,17 +9,9 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// ========================
-// CRUD de Clientes
-// ========================
-
 // Criar Cliente
 app.post('/cliente', async (req, res) => {
   const { nome, email, telefone, cpf } = req.body;
-
-  if (!nome || !email || !telefone || !cpf) {
-    return res.status(400).json({ error: "Todos os campos são obrigatórios!" });
-  }
 
   try {
     const [results] = await db.query(
@@ -111,17 +103,9 @@ app.get('/cliente', async (req, res) => {
   }
 });
 
-// ========================
-// CRUD de Locações
-// ========================
-
 // Criar Locação
 app.post('/locacao', async (req, res) => {
   const { nome, tipo, descricao, valor_hora, tempo_minimo, tempo_maximo } = req.body;
-
-  if (!nome || !tipo || !valor_hora || !tempo_minimo || !tempo_maximo) {
-    return res.status(400).json({ error: "Campos obrigatórios: nome, tipo, valor_hora, tempo_minimo e tempo_maximo!" });
-  }
 
   try {
     const [results] = await db.query(
@@ -222,17 +206,9 @@ app.delete('/locacao/:id', async (req, res) => {
   }
 });
 
-// ========================
-// CRUD de Reservas
-// ========================
-
 // Criar Reserva
 app.post('/reserva', async (req, res) => {
   const { cliente_id, locacao_id, data_inicio, data_fim, valor_final, situacao } = req.body;
-
-  if (!cliente_id || !locacao_id || !data_inicio || !data_fim || !valor_final || !situacao) {
-    return res.status(400).json({ error: "Todos os campos são obrigatórios!" });
-  }
 
   try {
     const [results] = await db.query(
@@ -343,11 +319,6 @@ app.get('/reserva/:id', async (req, res) => {
   }
 });
 
-
-// ========================
-// Locações Disponíveis por Data
-// ========================
-
 // Listar Locações Disponíveis
 app.get('/locacao/disponiveis', async (req, res) => {
   const { data_inicio, data_fim } = req.query;
@@ -375,11 +346,7 @@ app.get('/locacao/disponiveis', async (req, res) => {
   }
 });
 
-// ========================
-// Iniciar o Servidor
-// ========================
-
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-  console.log(`🚀 Servidor rodando em http://localhost:${PORT}`);
+  console.log(`Servidor rodando em http://localhost:${PORT}`);
 });

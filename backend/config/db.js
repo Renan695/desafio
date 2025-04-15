@@ -16,5 +16,5 @@ const db = await mysql.createPool({
 });
 
 
-console.log('✅ Conectado ao MySQL do WAMP');
+console.log('Conectado ao MySQL do WAMP');
 export default db;
