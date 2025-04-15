@@ -1,7 +1,7 @@
 import { useEffect, useState, useRef } from 'react';
 import api from '../../services/api';
 import './style.css';
-import Lixeira from '../../assets/lixeira.svg'; // ícone de lixeira
+import Lixeira from '../../assets/lixeira.svg';
 
 function Reserva() {
   const [reservas, setReservas] = useState([]);
@@ -65,11 +65,11 @@ function Reserva() {
 
       limparFormulario();
       setMessage('Reserva cadastrada com sucesso!');
-      setTimeout(() => setMessage(''), 2000); // Esconde a mensagem após 2 segundos
+      setTimeout(() => setMessage(''), 2000);
       getReservas();
     } catch (error) {
       setMessage('Erro ao cadastrar reserva!');
-      setTimeout(() => setMessage(''), 2000); // Esconde a mensagem após 2 segundos
+      setTimeout(() => setMessage(''), 2000);
     }
   }
 
@@ -84,11 +84,11 @@ function Reserva() {
 
       limparFormulario();
       setMessage('Reserva atualizada com sucesso!');
-      setTimeout(() => setMessage(''), 2000); // Esconde a mensagem após 2 segundos
+      setTimeout(() => setMessage(''), 2000);
       getReservas();
     } catch (error) {
       setMessage('Erro ao atualizar reserva!');
-      setTimeout(() => setMessage(''), 2000); // Esconde a mensagem após 2 segundos
+      setTimeout(() => setMessage(''), 2000);
     }
   }
 
@@ -117,28 +117,25 @@ function Reserva() {
   }
 
   async function deleteReserva(id) {
-    if (!window.confirm('Tem certeza que deseja deletar esta reserva?')) {
-      return;
-    }
+    if (!window.confirm('Tem certeza que deseja deletar esta reserva?')) return;
 
     try {
       await api.delete(`/reserva/${id}`);
       setMessage('Reserva deletada com sucesso!');
-      setTimeout(() => setMessage(''), 2000); // Esconde a mensagem após 2 segundos
+      setTimeout(() => setMessage(''), 2000);
       getReservas();
     } catch (error) {
       setMessage('Erro ao deletar reserva!');
-      setTimeout(() => setMessage(''), 2000); // Esconde a mensagem após 2 segundos
+      setTimeout(() => setMessage(''), 2000);
     }
   }
 
   return (
-    <section className="container">
+    <section className="container reserva">
       <form>
         <h1>{editando ? 'Editar Reserva' : 'Cadastro de Reservas'}</h1>
 
-        {/* Cliente */}
-        <select ref={inputClienteId} defaultValue="" className="selecao" disabled={editando}>
+        <select ref={inputClienteId} defaultValue="" disabled={editando}>
           <option value="" disabled>Selecione o Cliente</option>
           {clientes.map(cliente => (
             <option key={cliente.id} value={cliente.id}>
@@ -147,8 +144,7 @@ function Reserva() {
           ))}
         </select>
 
-        {/* Locação */}
-        <select ref={inputLocacaoId} defaultValue="" className="selecao" disabled={editando}>
+        <select ref={inputLocacaoId} defaultValue="" disabled={editando}>
           <option value="" disabled>Selecione a Locação</option>
           {locacoes.map(locacao => (
             <option key={locacao.id} value={locacao.id}>
@@ -157,12 +153,11 @@ function Reserva() {
           ))}
         </select>
 
-        <input placeholder="Data Início" type="datetime-local" ref={inputDataInicio} />
-        <input placeholder="Data Fim" type="datetime-local" ref={inputDataFim} />
-        <input placeholder="Valor Final" type="number" step="0.01" ref={inputValorFinal} />
+        <input type="datetime-local" ref={inputDataInicio} />
+        <input type="datetime-local" ref={inputDataFim} />
+        <input type="number" step="0.01" placeholder="Valor Final" ref={inputValorFinal} />
 
-        {/* Situação */}
-        <select ref={inputSituacao} defaultValue="" className="selecao">
+        <select ref={inputSituacao} defaultValue="">
           <option value="" disabled>Selecione a Situação</option>
           <option value="ativa">Ativa</option>
           <option value="cancelada">Cancelada</option>
@@ -182,24 +177,19 @@ function Reserva() {
 
       {message && <p className="message">{message}</p>}
 
-      {/* Lista de Reservas */}
-      <section className="listagem">
-        {reservas.map(reserva => (
-          <article key={reserva.id} className="card">
-            <div>
-              <p>ID Cliente: <span>{reserva.cliente_id}</span></p>
-              <p>ID Locação: <span>{reserva.locacao_id}</span></p>
-              <p>Data Início: <span>{new Date(reserva.data_inicio).toLocaleString()}</span></p>
-              <p>Data Fim: <span>{new Date(reserva.data_fim).toLocaleString()}</span></p>
-              <p>Valor Final: <span>R$ {parseFloat(reserva.valor_final).toFixed(2)}</span></p>
-              <p>Situação: <span>{reserva.situacao}</span></p>
-            </div>
-            <div className="botoes">
-              <button onClick={() => preencherFormulario(reserva)}>
-                Editar
-              </button>
+      <section className="reserva-listagem">
+        {reservas.map((reserva) => (
+          <article key={reserva.id} className="reserva-card">
+            <p><strong>ID Cliente:</strong> {reserva.cliente_id}</p>
+            <p><strong>ID Locação:</strong> {reserva.locacao_id}</p>
+            <p><strong>Data Início:</strong> {new Date(reserva.data_inicio).toLocaleString()}</p>
+            <p><strong>Data Fim:</strong> {new Date(reserva.data_fim).toLocaleString()}</p>
+            <p><strong>Valor Final:</strong> R$ {parseFloat(reserva.valor_final).toFixed(2)}</p>
+            <p><strong>Situação:</strong> {reserva.situacao}</p>
+            <div className="reserva-actions">
+              <button onClick={() => preencherFormulario(reserva)}>Editar</button>
               <button onClick={() => deleteReserva(reserva.id)}>
-                <img src={Lixeira} alt="Ícone de deletar" />
+                <img src={Lixeira} alt="Ícone de lixeira" />
               </button>
             </div>
           </article>

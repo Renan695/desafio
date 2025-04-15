@@ -135,9 +135,7 @@ function Locacao() {
   }
 
   async function deleteLocacao(id) {
-    if (!window.confirm('Tem certeza que deseja deletar esta locação?')) {
-      return;
-    }
+    if (!window.confirm('Tem certeza que deseja deletar esta locação?')) return;
 
     try {
       await api.delete(`/locacao/${id}`);
@@ -151,7 +149,7 @@ function Locacao() {
   }
 
   return (
-    <section className="container">
+    <section className="container locacao">
       <form>
         <h1>{editando ? 'Editar Locação' : 'Cadastro de Locações'}</h1>
 
@@ -173,18 +171,16 @@ function Locacao() {
 
       {message && <p className="message">{message}</p>}
 
-      <section className="listagem">
+      <section className="locacao-listagem">
         {locacoes.map((locacao) => (
-          <article key={locacao.id} className="card">
-            <div>
-              <p>Nome: <span>{locacao.nome}</span></p>
-              <p>Tipo: <span>{locacao.tipo}</span></p>
-              <p>Descrição: <span>{locacao.descricao}</span></p>
-              <p>Valor Hora: <span>R$ {parseFloat(locacao.valor_hora).toFixed(2)}</span></p>
-              <p>Tempo Mínimo: <span>{locacao.tempo_minimo}h</span></p>
-              <p>Tempo Máximo: <span>{locacao.tempo_maximo}h</span></p>
-            </div>
-            <div className="botoes">
+          <article key={locacao.id} className="locacao-card">
+            <p><strong>Nome:</strong> {locacao.nome}</p>
+            <p><strong>Tipo:</strong> {locacao.tipo}</p>
+            <p><strong>Descrição:</strong> {locacao.descricao}</p>
+            <p><strong>Valor Hora:</strong> R$ {parseFloat(locacao.valor_hora).toFixed(2)}</p>
+            <p><strong>Tempo Mínimo:</strong> {locacao.tempo_minimo}h</p>
+            <p><strong>Tempo Máximo:</strong> {locacao.tempo_maximo}h</p>
+            <div className="locacao-actions">
               <button onClick={() => preencherFormulario(locacao)}>Editar</button>
               <button onClick={() => deleteLocacao(locacao.id)}>
                 <img src={Lixeira} alt="Ícone de lixeira" />

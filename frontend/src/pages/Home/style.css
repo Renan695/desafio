@@ -1,139 +1,159 @@
-/* Estilo do container (Fundo do site) */
-.container {
+/* Container principal */
+.container.home {
   display: flex;
   align-items: center;
   flex-direction: column;
-  color: #FFFFFF; /* Branco Neve para o texto */
+  padding-top: 100px;
 }
 
-/* Estilo do header */
-header {
-  background: #004243; /* Cor escura do degradê */
-  padding: 20px;
-  color: #FFFFFF;
-  text-align: center;
-  width: 100%;
-}
-
-header h1 {
-  font-size: 30px;
-  margin: 0;
-}
-
-/* Estilo do título */
-h1 {
-  color: #FFFFFF; /* Branco Neve para o título */
+/* Título */
+.container.home h1 {
+  color: white;
   font-size: 28px;
   text-align: center;
 }
 
-/* Estilo do form */
-.form {
-  background-color: #206C6E; /* Verde médio do degradê */
-  padding: 30px;
-  border-radius: 10px;
-  width: 400px;
-  max-width: 90%;
+/* Formulário */
+.container.home form {
   display: flex;
   flex-direction: column;
   gap: 20px;
+  padding: 30px;
+  border-radius: 10px;
+  background-color: #6A9997;
+  max-width: 90%;
+  width: 400px;
+  margin-bottom: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-/* Estilo do botão */
-form button {
-  background-color: #6BFFB1; /* Verde limão */
-  border: none;
-  border-radius: 5px;
+/* Inputs do formulário */
+.container.home form input {
+  border: 1px solid #004243;
+  border-radius: 30px;
   height: 40px;
+  background-color: #004243;
   color: white;
+  font-size: 14px;
+  padding-left: 10px;
+  outline: none;
+}
+
+/* Botões do formulário */
+.container.home form button {
+  border-radius: 30px;
+  background-color: #206C6E;
+  height: 40px;
+  border: none;
   font-weight: bold;
   cursor: pointer;
-}
-
-form button:hover {
-  opacity: 0.8;
-}
-
-/* Estilo dos inputs */
-form input {
-  background-color: #6A9997; /* Verde clarinho do degradê */
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  height: 35px;
-  padding: 5px 10px;
-  color: #ffffff;
-}
-
-/* Nova seção para listagem dos cards */
-.listagem {
-  display: flex;
-  flex-wrap: wrap; /* Permite quebrar linha */
-  justify-content: center; /* Centraliza os cards */
-  gap: 20px; /* Espaço entre os cards */
-  margin-top: 20px;
-}
-
-/* Estilo dos cards */
-.card {
-  background-color: #004243; /* Verde escuro do degradê */
   color: white;
-  padding: 20px;
-  border-radius: 10px;
-  margin: 10px;
-  width: 250px; /* Largura inicial do card */
-  box-shadow: 0 0 10px rgba(0,0,0,0.3);
-  display: flex;
-  flex-direction: column; /* Empilha os elementos verticalmente */
-  justify-content: flex-start; /* Faz com que o conteúdo comece no topo */
-  overflow: visible; /* Deixa o conteúdo visível */
-  height: auto; /* Permite que o card se ajuste ao conteúdo */
-  word-wrap: break-word; /* Garante que palavras longas quebrem no final da linha */
+  font-size: 16px;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-/* Texto dentro dos cards */
-.card p {
-  margin: 5px 0;
+.container.home form button:hover {
+  opacity: 0.9;
+  transform: scale(1.05);
 }
 
-.card div p span {
-  font-weight: normal;
-}
-
-/* Ajuste dos botões dentro do card */
-.card .botoes {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 10px;
-}
-
-.card button {
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.2s ease; /* Animação no clique */
-  margin: 0 5px; /* Garantir que os botões não fiquem muito próximos */
-}
-
-.card button:hover {
-  opacity: 0.8;
-}
-
-.card button:active {
-  transform: scale(0.9); /* Efeito de "clicada" na lixeira */
-}
-
-/* Efeito Hover no Card */
-.card:hover {
-  transform: scale(1.03);
-  background-color: #206C6E; /* Cor média do degradê no hover */
-}
-
-/* Mensagem de erro ou sucesso */
-.message {
-  color: #FFFFFF; /* Branco Neve */
+/* Mensagem de sucesso ou erro */
+.container.home .message {
+  color: white;
+  background-color: #6A9997;
   padding: 10px;
   border-radius: 8px;
   margin-bottom: 20px;
   font-weight: bold;
   text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Container da listagem */
+.home-listagem {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+/* Cada card */
+.home-card {
+  background-color: #004d4d;
+  color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  width: 280px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* Informações no card */
+.home-card p {
+  margin: 6px 0;
+  font-size: 15px;
+  line-height: 1.4;
+}
+
+/* Destaque nos rótulos */
+.home-card strong {
+  font-weight: bold;
+}
+
+/* Ações (Editar e Deletar) */
+.home-actions {
+  margin-top: 15px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.home-actions button {
+  background: none;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+}
+
+.home-actions img {
+  width: 18px;
+  height: 18px;
+}
+
+
+.home-actions button {
+  background-color: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.home-actions button:hover {
+  opacity: 0.8;
+  transform: scale(1.1);
+}
+
+.home-actions button img {
+  width: 20px;
+  height: 20px;
+}
+.home-actions button:first-child {
+  background-color: #6A9997;
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.home-actions button:first-child:hover {
+  background-color: #6A9997;
 }

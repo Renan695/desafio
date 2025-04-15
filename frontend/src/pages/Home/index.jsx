@@ -54,7 +54,6 @@ function Home() {
 
     try {
       await api.post('/cliente', { nome, email, telefone, cpf });
-      
       limparCampos();
       setMessage('Usuário cadastrado com sucesso!');
       setTimeout(() => setMessage(''), 2000);
@@ -77,7 +76,7 @@ function Home() {
       setMessage('Usuário atualizado com sucesso!');
       setTimeout(() => setMessage(''), 2000);
       getUsers();
-      setEditando(false); // Isso vai esconder o botão de atualização
+      setEditando(false);
     } catch (error) {
       setMessage('Erro ao atualizar usuário!');
       setTimeout(() => setMessage(''), 2000);
@@ -95,19 +94,13 @@ function Home() {
   }
 
   function resetForm() {
-    inputNome.current.value = '';
-    inputEmail.current.value = '';
-    inputTelefone.current.value = '';
-    inputCPF.current.value = '';
-
+    limparCampos();
     setEditando(false);
     setIdEditando(null);
   }
 
   async function deleteUsers(id) {
-    if (!window.confirm('Tem certeza que deseja deletar este usuário?')) {
-      return;
-    }
+    if (!window.confirm('Tem certeza que deseja deletar este usuário?')) return;
 
     try {
       await api.delete(`/cliente/${id}`);
@@ -127,7 +120,6 @@ function Home() {
       return;
     }
     if (value.length > 11) value = value.slice(0, 11);
-    
     if (value.length > 6) {
       value = value.replace(/^(\d{2})(\d{5})(\d{0,4}).*/, '($1) $2-$3');
     } else if (value.length > 2) {
@@ -167,7 +159,7 @@ function Home() {
   }
 
   return (
-    <section className="container">
+    <section className="container home">
       <form>
         <h1>{editando ? 'Editar Usuário' : 'Cadastro de Usuários'}</h1>
 
@@ -198,22 +190,20 @@ function Home() {
 
       {message && <p className="message">{message}</p>}
 
-      <section className="listagem">
+      <section className="home-listagem">
         {users.map((user) => (
-          <article key={user.id} className="card">
-            <div>
-              <p>Nome: <span>{user.nome}</span></p>
-              <p>Email: <span>{user.email}</span></p>
-              <p>Telefone: <span>{user.telefone}</span></p>
-              <p>CPF: <span>{user.cpf}</span></p>
-            </div>
-            <div className="botoes">
-              <button onClick={() => preencherFormulario(user)}>Editar</button>
-              <button onClick={() => deleteUsers(user.id)}>
-                <img src={Lixeira} alt="Ícone de lixeira" />
-              </button>
-            </div>
-          </article>
+          <article key={user.id} className="home-card">
+          <p><strong>Nome:</strong> {user.nome}</p>
+          <p><strong>Email:</strong> {user.email}</p>
+          <p><strong>Telefone:</strong> {user.telefone}</p>
+          <p><strong>CPF:</strong> {user.cpf}</p>
+          <div className="home-actions">
+            <button onClick={() => preencherFormulario(user)}>Editar</button>
+            <button onClick={() => deleteUsers(user.id)}>
+              <img src={Lixeira} alt="Ícone de lixeira" />
+            </button>
+          </div>
+        </article>        
         ))}
       </section>
     </section>
