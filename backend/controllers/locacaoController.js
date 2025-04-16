@@ -116,14 +116,12 @@ export const listarLocacoesDisponiveis = async (req, res) => {
     const [locacoesDisponiveis] = await db.query(`
       SELECT l.*
       FROM locacao l
-      WHERE l.id NOT IN (
-        SELECT r.locacao_id
-        FROM reserva r
-        WHERE NOT (
-          r.data_fim <= ? OR r.data_inicio >= ?
-        )
-      )
-    `, [data_inicio, data_fim]);
+      LEFT JOIN reserva r
+        ON l.id = r.locacao_id
+        AND r.data_inicio < ?
+        AND r.data_fim > ?
+      WHERE r.id IS NULL
+    `, [data_fim, data_inicio]);
 
     res.status(200).json(locacoesDisponiveis);
   } catch (err) {
