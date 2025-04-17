@@ -17,7 +17,7 @@ Antes de começar, você vai precisar ter instalado na máquina:
 
 - [Node.js](https://nodejs.org/)
 - [NPM](https://www.npmjs.com/)
--  Vite (npm install --save-dev)
+- [Vite]
 - [MySQL Server](https://dev.mysql.com/downloads/)
 - [WAMP](https://www.wampserver.com/) (opcional para ambiente local)
 

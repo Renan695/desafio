@@ -7,6 +7,7 @@ Este projeto é o frontend desenvolvido em **React (Vite)** para interação com
 ```bash
 cd frontend
 npm install
+npm install --save-dev
 npm run dev
 ```
 
