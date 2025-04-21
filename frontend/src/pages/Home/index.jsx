@@ -66,25 +66,43 @@ function Home() {
     }
   }
 
-  // Atualiza um usuário existente
-  async function updateUsers() {
-    const nome = inputNome.current.value.trim();
-    const email = inputEmail.current.value.trim();
-    const telefone = limparMascara(inputTelefone.current.value);
-    const cpf = limparMascara(inputCPF.current.value);
+ // Atualiza um usuário existente
+async function updateUsers() {
+  const nome = inputNome.current.value.trim();
+  const email = inputEmail.current.value.trim();
+  const telefone = limparMascara(inputTelefone.current.value);
+  const cpf = limparMascara(inputCPF.current.value);
 
-    try {
-      await api.put(`/cliente/${idEditando}`, { nome, email, telefone, cpf });
-      limparCampos();
-      setMessage('Usuário atualizado com sucesso!');
-      setTimeout(() => setMessage(''), 2000);
-      getUsers();
-      setEditando(false);
-    } catch (error) {
-      setMessage('Erro ao atualizar usuário!');
-      setTimeout(() => setMessage(''), 2000);
-    }
+  if (!nome || !email || !telefone || !cpf) {
+    setMessage('Preencha todos os campos!');
+    setTimeout(() => setMessage(''), 2000);
+    return;
   }
+
+  if (!isEmailValido(email)) {
+    setMessage('E-mail inválido!');
+    setTimeout(() => setMessage(''), 2000);
+    return;
+  }
+
+  if (telefone.length !== 11 || cpf.length !== 11) {
+    setMessage('Telefone ou CPF inválidos!');
+    setTimeout(() => setMessage(''), 2000);
+    return;
+  }
+
+  try {
+    await api.put(`/cliente/${idEditando}`, { nome, email, telefone, cpf });
+    limparCampos();
+    setMessage('Usuário atualizado com sucesso!');
+    setTimeout(() => setMessage(''), 2000);
+    getUsers();
+    setEditando(false);
+  } catch (error) {
+    setMessage('Erro ao atualizar usuário!');
+    setTimeout(() => setMessage(''), 2000);
+  }
+}
 
   // Preenche o formulário para edição
   function preencherFormulario(user) {

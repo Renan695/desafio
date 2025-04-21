@@ -1,10 +1,53 @@
 import db from '../config/db.js';
 
+// Função para verificar a disponibilidade de uma locação no período solicitado
+export async function verificarDisponibilidade(req, res) {
+  const { locacao_id, data_inicio, data_fim } = req.query;
+
+  try {
+    const [reservas] = await db.execute(
+      `SELECT * FROM reserva 
+       WHERE locacao_id = ? 
+       AND situacao = 'ativa' 
+       AND (
+         (data_inicio BETWEEN ? AND ?) OR 
+         (data_fim BETWEEN ? AND ?)
+       )`,
+      [locacao_id, data_inicio, data_fim, data_inicio, data_fim]
+    );
+
+    if (reservas.length > 0) {
+      return res.status(200).json({ disponivel: false });
+    }
+
+    res.status(200).json({ disponivel: true });
+  } catch (error) {
+    console.error('Erro ao verificar disponibilidade:', error);
+    res.status(500).json({ message: 'Erro ao verificar disponibilidade' });
+  }
+}
+
 // Função para criar uma nova reserva
 export async function criarReserva(req, res) {
-  try {
-    const { cliente_id, locacao_id, data_inicio, data_fim, valor_final, situacao } = req.body;
+  const { cliente_id, locacao_id, data_inicio, data_fim, valor_final, situacao } = req.body;
 
+  // Verificar disponibilidade da locação no período
+  const [reservas] = await db.execute(
+    `SELECT * FROM reserva 
+     WHERE locacao_id = ? 
+     AND situacao = 'ativa' 
+     AND (
+       (data_inicio BETWEEN ? AND ?) OR 
+       (data_fim BETWEEN ? AND ?)
+     )`,
+    [locacao_id, data_inicio, data_fim, data_inicio, data_fim]
+  );
+
+  if (reservas.length > 0) {
+    return res.status(400).json({ message: 'A locação já está reservada para este período!' });
+  }
+
+  try {
     const [result] = await db.execute(
       `INSERT INTO reserva (cliente_id, locacao_id, data_inicio, data_fim, valor_final, situacao, data_criacao)
        VALUES (?, ?, ?, ?, ?, ?, NOW())`,

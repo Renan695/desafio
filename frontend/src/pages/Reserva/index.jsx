@@ -55,8 +55,35 @@ function Reserva() {
     }
   }
 
+  // Função para verificar se a locação está disponível no período solicitado
+  async function verificarDisponibilidade() {
+    try {
+      const response = await api.get('/verificar-disponibilidade', {
+        params: {
+          locacao_id: inputLocacaoId.current.value,
+          data_inicio: inputDataInicio.current.value,
+          data_fim: inputDataFim.current.value,
+        }
+      });
+
+      if (!response.data.disponivel) {
+        setMessage('A locação já está reservada para este período!');
+        setTimeout(() => setMessage(''), 2000);
+        return false;
+      }
+      return true;
+    } catch (error) {
+      setMessage('Erro ao verificar disponibilidade!');
+      setTimeout(() => setMessage(''), 2000);
+      return false;
+    }
+  }
+
   // Cria uma nova reserva
   async function createReserva() {
+    const disponivel = await verificarDisponibilidade();
+    if (!disponivel) return; // Se não estiver disponível, não cria a reserva
+
     try {
       await api.post('/reserva', {
         cliente_id: inputClienteId.current.value,
